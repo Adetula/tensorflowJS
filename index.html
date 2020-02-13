@@ -7,14 +7,24 @@
  <title>Document</title>
 </head>
 <body>
- <li>
-  <ul></ul>
-  <ul></ul>
-  <ul></ul>
-  <ul></ul>
-  <ul></ul>
-  <ul></ul>
-  <ul></ul>
- </li>
+ import "./styles.css";
+import * as tf from "@tensorflow/tfjs";
+import { image } from "@tensorflow/tfjs";
+
+const img = new Image();
+img.crossOrigin ="anonymous";
+
+img.src ="https://i.imgur.com/15MGK9z.png";
+
+img.onload = event =>{
+  const imageTensor = tf.browser.fromPixels(event.target);
+  imageTensor.print();
+  document.getElementById("app").innerHTML = `
+<h1>${imageTensor.shape[1]}x${imageTensor.shape[0]}</h1>
+<canvas id = printCanvas>
+`;
+const printCanvas = document.getElementById("printCanvas")
+tf.browser.toPixels(imageTensor,printCanvas);
+};
 </body>
 </html>
